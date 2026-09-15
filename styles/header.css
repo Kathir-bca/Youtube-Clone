@@ -389,15 +389,16 @@ body {
     }
 
     .middle-section {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 44px 52px;
         min-width: 0;
         width: 100%;
         max-width: 600px;
     }
 
     .search {
-        flex: 1 1 auto;
         min-width: 0;
-        width: auto;
+        width: 100%;
         height: 36px;
         padding-inline: 12px;
         font-size: 14px;
@@ -436,6 +437,7 @@ body {
 
 @media (max-width: 430px) {
     .middle-section {
+        grid-template-columns: minmax(0, 1fr) 40px 52px;
         min-width: 0;
         max-width: 600px;
     }
