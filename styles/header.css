@@ -164,6 +164,9 @@ body {
     background: #f2f2f2;
     cursor: pointer;
     flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    padding: 0;
 }
 
 .y-voice:hover {
@@ -171,8 +174,12 @@ body {
 }
 
 .voice-icon {
+    display: block;
     width: 22px;
     height: 22px;
+    flex: 0 0 22px;
+    opacity: 1;
+    visibility: visible;
 }
 
 .right-section {
@@ -409,6 +416,14 @@ body {
         height: 36px;
     }
 
+    .y-voice {
+        width: 40px;
+        height: 40px;
+        margin-left: 12px;
+        justify-self: start;
+        align-self: center;
+    }
+
     .y-app,
     .y-upload {
         display: none;
@@ -440,6 +455,13 @@ body {
         grid-template-columns: minmax(0, 1fr) 40px 52px;
         min-width: 0;
         max-width: 600px;
+    }
+
+    .y-voice {
+        width: 40px;
+        height: 40px;
+        margin-left: 12px;
+        justify-self: start;
     }
 
     .search {
