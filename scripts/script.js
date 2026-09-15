@@ -18,9 +18,6 @@
 
     if (!videoGrid || !Array.isArray(window.videos)) return;
 
-    // -------------------------------
-    // Render videos
-    // -------------------------------
     const escapeHTML = (value = '') => String(value)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -151,13 +148,68 @@
     updateNotificationCount();
 
     // -------------------------------
-    // Voice search placeholder
+    // Voice search
     // -------------------------------
-    voiceSearch?.addEventListener('click', () => {
-        if ('speechSynthesis' in window) {
-            window.alert('Voice search is coming soon.');
-        }
-    });
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let isListening = false;
+
+    if (SpeechRecognition && voiceSearch) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-IN';
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => {
+            isListening = true;
+            voiceSearch.classList.add('listening');
+            voiceSearch.setAttribute('aria-label', 'Listening');
+            voiceSearch.setAttribute('title', 'Listening...');
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript.trim();
+            if (searchInput && transcript) {
+                searchInput.value = transcript;
+                filterVideos();
+            }
+        };
+
+        recognition.onerror = (event) => {
+            if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+                window.alert('Microphone permission is required for voice search.');
+            } else if (event.error !== 'aborted') {
+                window.alert('Voice search could not start. Please try again.');
+            }
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            voiceSearch.classList.remove('listening');
+            voiceSearch.setAttribute('aria-label', 'Voice search');
+            voiceSearch.setAttribute('title', 'Voice search');
+        };
+
+        voiceSearch.addEventListener('click', () => {
+            if (isListening) {
+                recognition.stop();
+                return;
+            }
+
+            try {
+                recognition.start();
+            } catch (error) {
+                if (error.name !== 'InvalidStateError') {
+                    window.alert('Voice search could not start. Please try again.');
+                }
+            }
+        });
+    } else if (voiceSearch) {
+        voiceSearch.addEventListener('click', () => {
+            window.alert('Voice search is not supported in this browser. Try Chrome on Android.');
+        });
+    }
 
     // -------------------------------
     // Dark mode shortcut: Ctrl/Cmd + D
