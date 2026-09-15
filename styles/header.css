@@ -302,25 +302,11 @@ body {
 }
 
 @keyframes ring {
-    20% {
-        transform: rotate(12deg)
-    }
-
-    40% {
-        transform: rotate(-12deg)
-    }
-
-    60% {
-        transform: rotate(8deg)
-    }
-
-    80% {
-        transform: rotate(-6deg)
-    }
-
-    100% {
-        transform: rotate(0)
-    }
+    20% { transform: rotate(12deg) }
+    40% { transform: rotate(-12deg) }
+    60% { transform: rotate(8deg) }
+    80% { transform: rotate(-6deg) }
+    100% { transform: rotate(0) }
 }
 
 @media (max-width: 1120px) {
@@ -366,7 +352,7 @@ body {
 
     .header {
         height: var(--header-height);
-        grid-template-columns: 90px 1fr 70px;
+        grid-template-columns: 90px minmax(0, 1fr) 70px;
         padding-inline: 6px;
         gap: 6px;
     }
@@ -389,8 +375,9 @@ body {
     }
 
     .middle-section {
-        min-width: 200px;
-        max-width: 600px;
+        min-width: 0;
+        max-width: none;
+        width: 100%;
     }
 
     .search {
@@ -403,10 +390,21 @@ body {
         width: 44px;
         height: 36px;
     }
-    .y-app, .y-upload{
+
+    .y-voice {
+        width: 36px;
+        height: 36px;
+        margin-left: 6px;
+        flex: 0 0 36px;
+    }
+
+    .y-app,
+    .y-upload {
         display: none;
     }
-    .search-logo {
+
+    .search-logo,
+    .voice-icon {
         width: 19px;
         height: 19px;
     }
@@ -428,19 +426,30 @@ body {
 }
 
 @media (max-width: 430px) {
+    .header {
+        grid-template-columns: 82px minmax(0, 1fr) 62px;
+        gap: 4px;
+        padding-inline: 4px;
+    }
 
     .middle-section {
-        min-width: 140px;
-        max-width: 600px;
+        min-width: 0;
     }
 
     .search {
         font-size: 13px;
-        padding-inline: 10px;
+        padding-inline: 8px;
     }
 
     .y-search {
-        width: 40px;
+        width: 38px;
+    }
+
+    .y-voice {
+        width: 34px;
+        height: 34px;
+        margin-left: 4px;
+        flex-basis: 34px;
     }
 
     .profile-button {
@@ -455,5 +464,37 @@ body {
 
     .notification-panel {
         right: -52px;
+    }
+}
+
+@media (max-width: 360px) {
+    .header {
+        grid-template-columns: 76px minmax(0, 1fr) 58px;
+        gap: 3px;
+    }
+
+    .left-section {
+        gap: 4px;
+    }
+
+    .icon-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .logo-mobile {
+        width: 28px;
+    }
+
+    .y-voice {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+        margin-left: 3px;
+    }
+
+    .voice-icon {
+        width: 18px;
+        height: 18px;
     }
 }
